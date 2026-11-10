@@ -15,6 +15,8 @@ class Settings(BaseSettings):
     cors_origins: str = "*"
     admin_email: str = "admin@clacs.ao"
     admin_password: str = "admin123"
+    # true = no arranque repõe a senha do ADMIN_EMAIL com o valor de ADMIN_PASSWORD
+    admin_repor_senha: bool = False
     auto_criar_tabelas: bool = True
 
     @property
