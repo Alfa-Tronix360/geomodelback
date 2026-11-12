@@ -38,7 +38,8 @@ app = FastAPI(
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=settings.origens,
+    allow_origins= ["http://localhost:5173",
+        "https://geomodelfront.vercel.app",],
     # O wildcard é incompatível com credenciais; em desenvolvimento usamos Authorization.
     allow_credentials="*" not in settings.origens,
     allow_methods=["*"],
