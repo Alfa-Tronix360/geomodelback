@@ -69,6 +69,9 @@ def recalcular(db: Session, furos: set[str] = frozenset(), projectos: set[str] =
         if novo != furo.estado:
             furo.estado = novo
             mudou = True
+            if novo == "concluido":
+                from app.services.notificacoes import furo_concluido
+                furo_concluido(db, furo)
     if mudou:
         db.flush()  # o estado dos furos conta para o do projecto
     for pid in projectos:

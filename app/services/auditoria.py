@@ -42,3 +42,6 @@ def auditar(
         dados_depois=depois,
         ip=ip,
     ))
+    # avisa (sino) quem tem de agir no passo seguinte do fluxo
+    from app.services.notificacoes import apos_auditoria
+    apos_auditoria(db, ctx.company_id, ctx.utilizador.id, accao, entidade, antes, depois)

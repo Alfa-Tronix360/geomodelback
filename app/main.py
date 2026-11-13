@@ -12,7 +12,7 @@ from app.services.arranque import preparar_base_de_dados
 from app.services import estados  # noqa: F401  (estados automáticos de furos e projectos)
 from app.routers import (
     assays, audit, auth, cena3d, companies, dashboard, drill_holes, importacao, laboratories,
-    models3d, projects, resources, samples, users,
+    models3d, notificacoes, projects, resources, samples, users,
 )
 
 settings = get_settings()
@@ -50,7 +50,7 @@ app.add_middleware(
 for router in (
     auth.router, companies.router, users.router, projects.router, drill_holes.router,
     samples.router, laboratories.router, assays.router, models3d.router, resources.router,
-    dashboard.router, audit.router, importacao.router, cena3d.router,
+    dashboard.router, audit.router, importacao.router, cena3d.router, notificacoes.router,
 ):
     app.include_router(router)
 

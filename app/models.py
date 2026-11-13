@@ -404,3 +404,25 @@ class AuditLog(Base):
     dados_depois: Mapped[dict | None] = mapped_column(JSON)
     ip: Mapped[str | None] = mapped_column(String(60))
     criado_em: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=agora, nullable=False)
+
+
+# ---------------------------------------------------------------- 21. notificações (sino)
+class Notificacao(Base):
+    """Aviso para quem tem de agir no passo seguinte do fluxo (amostra enviada, resultado por validar…)."""
+    __tablename__ = "notifications"
+    __table_args__ = (
+        Index("ix_notifications_user_lida", "user_id", "lida_em"),
+        Index("ix_notifications_user_chave", "user_id", "chave"),
+    )
+
+    id: Mapped[str] = mapped_column(String(36), primary_key=True, default=novo_id)
+    company_id: Mapped[str] = mapped_column(String(36), ForeignKey("companies.id", ondelete="CASCADE"), nullable=False)
+    user_id: Mapped[str] = mapped_column(String(36), ForeignKey("users.id", ondelete="CASCADE"), nullable=False)
+    tipo: Mapped[str] = mapped_column(String(40), nullable=False)
+    titulo: Mapped[str] = mapped_column(String(160), nullable=False)
+    mensagem: Mapped[str | None] = mapped_column(Text)
+    link: Mapped[str | None] = mapped_column(String(255))
+    # agrupa avisos repetidos (ex.: vários resultados por validar no mesmo projecto) num só, enquanto não for lido
+    chave: Mapped[str | None] = mapped_column(String(120))
+    lida_em: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
+    criado_em: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=agora, nullable=False)
