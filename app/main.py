@@ -9,6 +9,7 @@ from fastapi.responses import JSONResponse
 from app.config import get_settings
 from app.database import Base, engine
 from app.services.arranque import preparar_base_de_dados
+from app.services import estados  # noqa: F401  (estados automáticos de furos e projectos)
 from app.routers import (
     assays, audit, auth, cena3d, companies, dashboard, drill_holes, importacao, laboratories,
     models3d, projects, resources, samples, users,

@@ -14,6 +14,7 @@ from app.schemas import (
 from app.services.auditoria import auditar, serializar
 from app.services.geo import validar_geojson
 from app.services.codigos import proximo_codigo_projecto
+from app.services.estados import recalcular_empresa
 
 router = APIRouter(tags=["Projectos e litologias"])
 
@@ -49,6 +50,8 @@ def listar(estado: str | None = None, mineral: str | None = None, q: str | None 
            incluir_eliminados: bool = False, skip: int = 0, limit: int = 50,
            ctx: Contexto = Depends(exige("projects", "view")), db: Session = Depends(get_db)):
     company_id = exigir_empresa(ctx)
+    if recalcular_empresa(db, company_id):  # estados que mudam com a data (início/fim a chegar)
+        db.commit()
     consulta = select(Project).where(Project.company_id == company_id)
     if not incluir_eliminados:
         consulta = consulta.where(Project.eliminado_em.is_(None))

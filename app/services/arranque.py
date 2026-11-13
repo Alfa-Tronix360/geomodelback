@@ -36,6 +36,9 @@ def preparar_base_de_dados() -> None:
             admin.superadmin = True
             admin.activo = True
             log.warning("Senha do super administrador reposta: %s", email)
+        # estados automáticos: actualiza os que dependem da data (início/fim a chegar)
+        from app.services.estados import recalcular_empresa
+        recalcular_empresa(db, com_furos=True)
         db.commit()
     except Exception:
         db.rollback()

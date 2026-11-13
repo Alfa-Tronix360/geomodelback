@@ -132,7 +132,8 @@ def criar_furo(cliente, admin_a):
         dados = {
             "project_id": project_id, "codigo": codigo, "x": 0.0, "y": 0.0, "z": 100.0,
             "azimute": 90.0, "inclinacao": -60.0, "profundidade_prevista": 200.0,
-            "profundidade_final": 150.0, "estado": "concluido",
+            # o estado é automático: com data de fim o furo fica "concluido"
+            "profundidade_final": 150.0, "data_inicio": "2026-01-10", "data_fim": "2026-02-10",
         }
         dados.update(extra)
         resposta = cliente.post("/drill-holes", json=dados, headers=admin_a)
